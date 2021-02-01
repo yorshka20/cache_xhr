@@ -2,7 +2,7 @@
  * @Author: yorshka
  * @Date: 2021-02-01 13:34:26
  * @Last Modified by: yorshka
- * @Last Modified time: 2021-02-01 15:11:30
+ * @Last Modified time: 2021-02-01 15:38:48
  */
 
 interface CacheItem {
@@ -14,7 +14,7 @@ export default class CacheXHR {
   static instance: CacheXHR;
 
   // 缓存容量
-  private cacheLengthLimit = 0;
+  private cacheLengthLimit = 10;
   // 缓存bucket
   private cachePool: Array<CacheItem> = [];
   // 请求队列
@@ -27,7 +27,7 @@ export default class CacheXHR {
 
     this.cachePool = [];
     this.requestQueue = new Map<string, XMLHttpRequest>();
-    this.cacheLengthLimit = length;
+    this.cacheLengthLimit = length < 0 ? 10 : length;
 
     CacheXHR.instance = this;
   }
@@ -74,7 +74,7 @@ export default class CacheXHR {
         this.requestQueue!.set(id, xhr);
 
         xhr.open("get", url);
-        xhr.onload = (e: ProgressEvent) => {
+        xhr.onload = () => {
           // 检查缓存容量
           if (this.cacheLengthLimit < this.cachePool.length) {
             this.cachePool.shift();

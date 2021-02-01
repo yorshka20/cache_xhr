@@ -11,7 +11,7 @@ function App() {
     console.log("input", input);
     const xhr = new CacheXHR(100);
 
-    const url = `http://${input}`;
+    const url = `http://${input.replace(/(http|https):\/\//, "")}`;
     xhr
       .get(url)
       .then((res) => {
@@ -24,7 +24,7 @@ function App() {
         console.log("err", err);
         const container = document.getElementById("result");
 
-        container!.innerText = "request error" + "\n";
+        container!.innerText = "request error";
       });
   };
 
