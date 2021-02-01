@@ -2,7 +2,7 @@
  * @Author: yorshka
  * @Date: 2021-02-01 13:34:26
  * @Last Modified by: yorshka
- * @Last Modified time: 2021-02-01 15:09:33
+ * @Last Modified time: 2021-02-01 15:11:30
  */
 
 interface CacheItem {
@@ -43,6 +43,7 @@ export default class CacheXHR {
         if (cache.id === id) {
           hasCache = true;
           result = cache;
+          break;
         }
       }
 
